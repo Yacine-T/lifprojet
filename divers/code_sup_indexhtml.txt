@@ -1,0 +1,10 @@
+<button type="button" class="close" aria-label="Close" @click="displayAllTeams">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+  <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link">Previous</a></li>
+          <li class="page-item"><a class="page-link">Next</a></li>
+        </ul>
+      </nav>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>NBA Stats</title>
+  <link rel="stylesheet" type="text/css" href="librairies/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/main.css">
+  <link rel="stylesheet" type="text/css" href="assets/index.css">
+  <link rel="stylesheet" type="text/css" href="assets/aboutus.css">
+  <link rel="stylesheet" type="text/css" href="assets/listPlayer.css">
+  <link rel="stylesheet" type="text/css" href="assets/selectPlayer.css">
+</head>
+
+<body>
+  <header>
+    <img src="images/nba_logo.png" id="nba_logo">
+  </header>
+
+  <div class="container" id="app">
+    <ul class="nav bg-white">
+      <li class="nav-item"><a class="nav-link" @click="displayAllTeams">Equipes</a></li>
+      <li class="nav-item"><a class="nav-link" @click="displayAbout">A propos</a></li>
+    </ul>
+    <!-- Affichage des logos de toutes les équipes -->
+    <div class="card-columns row text-center" id="logo" v-show="!teamSelection && !playerSelection && !about"
+      id="cardsTeam">
+      <div class="col-md-2" v-for="team in teams" id="line">
+        <a href="#" v-on:click="selectTeam(team)">
+          <div class="card" id="cards">
+            <img v-bind:src="'https://stats.nba.com/media/img/teams/logos/'+team.abbreviation+'_logo.svg'"
+              class="teamLogo card-img-top" alt="...">
+            <p>{{ team.name }}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- Affichage de l'effectif de l'équipe sélectionnée -->
+    <div v-show="teamSelection && !playerSelection && selectedTeam">
+      <div id="teamImage">
+        <img v-bind:src="'https://stats.nba.com/media/img/teams/logos/'+selectedTeam.abbreviation+'_logo.svg'">
+        <p id="nameTeam" style="color: white;">{{selectedTeam.full_name}}</p>
+      </div>
+      <div class="card-columns row" id="tableListPlayer">
+        <div class="col-md-2 listPlayer" v-for="player in selectedTeamPlayers">
+          <a href="#" @click="selectPlayer(player)">
+            <div class="card" id="cardsPlayer">
+              <img v-bind:src="'https://nba-players.herokuapp.com/players/'+player.last_name+'/'+player.first_name"
+                onerror="this.src = 'images/profile_basket.png'" class="card-img-top">
+              <p>{{player.first_name}}&nbsp;{{player.last_name}}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-dark" type="button" @click="displayAllTeams">Accueil</button>
+      </div>
+    </div>
+
+
+    <!-- Affichage du joueur sélectionné -->
+    <div v-show="playerSelection">
+
+      <!-- En-tête de l'affichage du joueur selectionné -->
+      <div class="mask" id="selectPlayer">
+
+        <!-- Affichage de la photo du joueur selectionné -->
+        <div class="card-columns" id="img_fiche">
+          <a href="#">
+            <img
+              v-bind:src="'https://nba-players.herokuapp.com/players/'+selectedPlayer.last_name+'/'+selectedPlayer.first_name"
+              onerror="this.src = 'images/profile_basket.png'" class="card-img-top">
+          </a>
+        </div>
+
+        <!--Affichage du logo de l'équipe du joueur selectionné-->
+        <div class="card-columns" id="fiche_logo">
+          <img v-bind:src="'https://stats.nba.com/media/img/teams/logos/'+selectedTeam.abbreviation+'_logo.svg'"
+            class="teamLogo card-img-top" alt="...">
+        </div>
+
+        <!-- Affichage des informations textes concernant le joueur selectionné -->
+        <p>{{ selectedPlayer.first_name }}</p>
+        <p>{{ selectedPlayer.last_name }}</p>
+        <p>{{ selectedPlayer.position }}</p>
+
+      </div>
+
+      <div id="playerSelection">
+        <p>STATISTIQUES</p>
+      </div>
+      <div class="row">
+
+        <div class="col-sm-12 col-lg-6">
+          <!-- Graphique des statistiques du joueur sélectionné sur les 10 derniers matchs-->
+          <div id="chart" style="width: 540px; height:520px"></div>
+          <select v-model="graphChoice">
+            <!-- On relie la case sélectionnée à la variable graphChoice -->
+            <option v-for="option in graphOptions" v-bind:value="option">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-sm-12 col-lg-6">
+          <!-- Graphique de comparaison des statistiques moyennes joueur/équipe sur la saison 2019-2020 -->
+          <div id="compChart" style="width: 540px; height: 520px"></div>
+          <select v-model="compGraphChoice" id="compSelect">
+            <!-- On relie la case sélectionnée à la variable compGraphChoice -->
+            <option v-for="option in graphOptions" v-bind:value="option">
+              {{ option.text }}
+            </option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Affichage du tableau regroupant les statistiques moyennes du joueur sélectionné allant des saisons, si jouées, 2015-2016 à 2019-2020 -->
+      <table class="table table-hover table-light">
+        <thead>
+          <tr>
+            <th scope="col">Saison</th>
+            <th scope="col">Nombre de matchs joués</th>
+            <th scope="col">Points</th>
+            <th scope="col">%Tirs</th>
+            <th scope="col">%Tirs à 3 points</th>
+            <th scope="col">%Lancers francs</th>
+            <th scope="col">Passes décisives</th>
+            <th scope="col">Rebonds</th>
+            <th scope="col">Interceptions</th>
+            <th scope="col">Contres</th>
+            <th scope="col">Pertes de balle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ player2019Averages.season }}</td>
+            <td>{{ player2019Averages.games_played }}</td>
+            <td>{{ player2019Averages.pts }}</td>
+            <td>{{ player2019Averages.fg_pct }}</td>
+            <td>{{ player2019Averages.fg3_pct }}</td>
+            <td>{{ player2019Averages.ft_pct }}</td>
+            <td>{{ player2019Averages.ast }}</td>
+            <td>{{ player2019Averages.reb }}</td>
+            <td>{{ player2019Averages.stl }}</td>
+            <td>{{ player2019Averages.blk }}</td>
+            <td>{{ player2019Averages.turnover }}</td>
+          </tr>
+          <tr v-for="avg in playerAverages">
+            <td>{{ avg.season }}</td>
+            <td>{{ avg.games_played }}</td>
+            <td>{{ avg.pts }}</td>
+            <td>{{ avg.fg_pct }}</td>
+            <td>{{ avg.fg3_pct }}</td>
+            <td>{{ avg.ft_pct }}</td>
+            <td>{{ avg.ast }}</td>
+            <td>{{ avg.reb }}</td>
+            <td>{{ avg.stl }}</td>
+            <td>{{ avg.blk }}</td>
+            <td>{{ avg.turnover }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="text-center" id="backBtn">
+        <button class="btn btn-dark" type="button" @click="displaySelectedTeam">Retour</button>
+      </div>
+
+    </div>
+
+
+    <!-- Affichage de l'onglet "A propos" -->
+    <div v-show="about" id="aboutus">
+      <div id="project">
+        <h3>Projet</h3>
+        <p>
+          Notre application permet à tout fan de la NBA de consulter les statistiques de n'importe quel joueur ayant
+          joué au
+          moins un match au cours de la saison 2019-2020.
+          <br>
+          Pour une statistique en particulier que l'utilisateur sélectionnera, il est possible de consulter les
+          performances
+          du joueur par rapport à celle-ci sur ses dix derniers matchs mais aussi de consulter sa moyenne sur l'ensemble
+          de la
+          saison et la comparer au reste de son équipe pour voir sa contribution.
+          <br>
+          On a également accès au tableau des moyennes de saison du joueur sur plusieurs statistiques pour plusieurs
+          saisons
+          (2015-2016 à 2019-2020).
+        </p>
+      </div>
+
+      <div id="presentation">
+        <h3>Qui sommes-nous ?</h3>
+        <p>
+          Nous sommes 3 étudiants en informatique à l'Université Claude Bernard à Lyon.
+          Nous avons choisi de croiser une de nos passions, le sport, avec ce qui sera
+          notre coeur de métier à l'avenir.
+          <br><br>
+          En effet, nous souhaitons devenir développeurs web.
+          Pour ce faire, il a fallu travailler sur un projet à la fois intuitif et nous permettant
+          d'acquerir de nouvelles compétences. Ainsi, cela fut l'opportunité de développer
+          nos compétences tant au niveau technique avec l'utilisation de frameworks tels que Vue.js,
+          qu'au niveau organisationnel.</p>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+<footer>
+  <p>Yacine TAZDAIT - Daryl ISSOUFI - Hynd KHELLAS<br>Etudiants en L3 Informatique<br>Université Claude
+    Bernard - Lyon 1
+  </p>
+</footer>
+
+<script src="librairies/vuejs/node_modules/vue/dist/vue.js"></script>
+<script src="librairies/axios/node_modules/axios/dist/axios.min.js"></script>
+<script src="librairies/jquery/jquery.js"></script>
+<script src="librairies/bootstrap/js/bootstrap.min.js"></script>
+<script src="librairies/anychartjs/js/anychart-base.min.js"></script>
+<script src="app.js"></script>
+
+</html>

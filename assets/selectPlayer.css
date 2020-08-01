@@ -1,0 +1,120 @@
+@font-face {
+	font-family: "Rajdhani";
+	src: url('../fonts/Rajdhani/Rajdhani-Regular.ttf');
+}
+
+#selectPlayer {
+	padding-top: 3%;
+	padding-bottom: 3%;
+	border-radius: 25px;
+	background-image: linear-gradient(to right bottom, #1D428A, black);
+	overflow: hidden;
+}
+
+#selectPlayer p {
+	font-family: 'Rajdhani';
+	font-size: 200%;
+	font-weight: bold;
+	color: lightgrey;
+	margin-bottom: 0%;
+	text-align: left;
+	padding-left: 23%;
+}
+
+
+select {
+	font-family: 'Rajdhani';
+	font-weight: bold;
+	background-color: lightgrey;
+	color: #1D428A;
+	border-radius: 25px;
+}
+
+#compChart svg {
+	border: solid lightgrey;
+	border-radius: 25px;
+	fill: #1D428A
+}
+
+#chart svg {
+	border: solid lightgrey;
+	border-radius: 25px;
+}
+
+#fiche_logo {
+	float: right;
+	width: 30%;
+	height: 30%;
+	margin-top: -2%;
+	margin-bottom: -2%;
+	margin-right: -17%;
+}
+
+#img_fiche {
+	float: left;
+	width: 70%;
+	margin-right: -70%;
+	margin-bottom: -10%;
+}
+
+
+#closePlayer {
+	margin-top: -3%;
+}
+
+#playerSelection {
+	font-family: 'Rajdhani';
+	color: #1D428A;
+	background-image: linear-gradient(to right bottom, grey, white);
+	margin-top: 2%;
+	border-radius: 25px;
+	padding-left: 40%;
+	padding-right: 40%;
+	font-size: 300%;
+	font-weight: bold;
+	text-align: center;
+}
+
+table {
+	border-collapse: collapse;
+	border-radius: 25px;
+	overflow: hidden;
+	font-family: 'Rajdhani';
+	margin-top: 2%;
+	text-align: center;
+}
+
+thead {
+	border-collapse: collapse;
+	border-radius: 25px;
+	background: linear-gradient(to bottom, white, grey);
+	color: #1D428A;
+}
+
+tbody tr:nth-child(odd) {
+	background: linear-gradient(to bottom, #1D428A, black);
+	overflow: hidden;
+	color: white;
+}
+
+tbody tr:nth-child(odd):hover {
+	background: linear-gradient(to bottom, rgb(206, 54, 54), black);
+	color: white;
+	font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+	background: linear-gradient(to bottom, grey, black);
+	overflow: hidden;
+	color: white;
+}
+
+tbody tr:nth-child(even):hover {
+	background: linear-gradient(to bottom, rgb(206, 54, 54), black);
+	color: white;
+	font-weight: bold;
+}
+
+#back button {
+	margin-top: 2%;
+}

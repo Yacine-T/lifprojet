@@ -1,0 +1,77 @@
+@font-face {
+	font-family: "Rajdhani";
+	src: url('../fonts/Rajdhani/Rajdhani-Regular.ttf');
+}
+
+#teamImage {
+	border-bottom: 2px solid grey;
+}
+
+#teamImage img {
+	display: block;
+	margin: auto;
+	width: 10%;
+}
+
+#teamImage p {
+	text-align: center;
+	font-family: "Rajdhani";
+}
+
+#tableListPlayer {
+	padding-top: 3.5%;
+}
+
+.listPlayer {
+	margin-bottom: 3%;
+}
+
+#cardsPlayer p {
+	font-family: 'Rajdhani';
+	font-weight: bold;
+	text-align: center;
+	color: grey;
+	margin-top: 5%;
+}
+
+#cardsPlayer {
+	margin-bottom: 10%;
+	border-radius: 25px;
+	background-image: linear-gradient(to right bottom, grey, black);
+	overflow: hidden;
+}
+
+#cardsPlayer img {
+	border-radius: 3em;
+	margin-top: 8%;
+	margin-bottom: 5%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+#cardsPlayer img:hover {
+	cursor: pointer;
+}
+
+#cardsPlayer:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -200px;
+	box-sizing: content-box;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.3);
+	transform: skewX(-40deg);
+	transition: 0.5s;
+}
+
+#cardsPlayer:hover:before {
+	display: block;
+	left: 150px;
+	cursor: pointer;
+}
+
+footer {
+	margin-top: 6%;
+}

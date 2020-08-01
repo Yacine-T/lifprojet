@@ -1,0 +1,43 @@
+@font-face {
+	font-family: "Rajdhani";
+	src: url('../fonts/Rajdhani/Rajdhani-Regular.ttf');
+}
+
+#logo {
+	padding-top: 4%;
+}
+
+#cards {
+	border-radius: 25px;
+	background-image: linear-gradient(to right bottom, white, grey);
+	overflow: hidden;
+}
+
+#cards p {
+	font-family: "Rajdhani";
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+}
+
+#cards:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -200px;
+	box-sizing: content-box;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.3);
+	transform: skewX(-40deg);
+	transition: 0.5s;
+}
+
+#cards:hover:before {
+	display: block;
+	left: 150px;
+}
+
+#app {
+	margin-top: 5%;
+}

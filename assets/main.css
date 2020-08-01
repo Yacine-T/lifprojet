@@ -1,0 +1,63 @@
+@font-face {
+	font-family: "Rajdhani";
+	src: url('../fonts/Rajdhani/Rajdhani-Regular.ttf');
+}
+
+header {
+	background-color: #1D428A;
+}
+
+body {
+	background-color: #131210;
+}
+
+#nba_logo {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	height: 11rem;
+	width: 15rem;
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+#app ul {
+	margin-top: -5%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+}
+
+#app ul li a {
+	font-weight: bold;
+	color: #1D428A;
+	transition: background-color 1s, color 0.5s;
+	cursor: pointer;
+	font-family: 'Rajdhani';
+}
+
+#app ul li a:hover {
+	background-color: #2c296b;
+	color: white;
+}
+
+#app ul li a:active {
+	background-color: #2c296b;
+	color: white;
+}
+
+#line {
+	padding-bottom: 5%;
+}
+
+footer {
+	border-top: 2px solid grey;
+}
+
+footer p {
+	font-family: 'Rajdhani';
+	font-weight: bold;
+	padding-top: 2%;
+	text-align: center;
+	color: grey;
+}
